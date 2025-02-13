@@ -1,0 +1,28 @@
+# Ignorar archivos innecesarios por defecto 
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env/
+.DS_Store
+Thumbs.db
+
+# Ignorar imágenes y archivos Python por defecto
+*.png
+*.py
+
+# Incluir todos los archivos .py dentro de ImageProcessing/
+!ImageProcessing/
+!ImageProcessing/**/.py
+
+# Incluir archivos específicos en UNet
+!UNet/segmentation_pytorch.py
+!UNet/segmentation_tensorflow.py
+
+# Incluir todo lo que hay en WebPage
+!WebPage/
+!WebPage/**
+
+# Ignorar toda la carpeta Data, pero permitir que la carpeta vacía exista
+!Data/**
