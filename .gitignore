@@ -14,7 +14,7 @@ Thumbs.db
 
 # Incluir todos los archivos .py dentro de ImageProcessing/
 !ImageProcessing/
-!ImageProcessing/**/.py
+!ImageProcessing/**
 
 # Incluir archivos específicos en UNet
 !UNet/segmentation_pytorch.py
