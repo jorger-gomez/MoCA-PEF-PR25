@@ -1,3 +1,23 @@
+""" Resize with Padding - Image Preprocessing Script
+
+    This script processes images by:
+    1. Removing white borders from images.
+    2. Adding padding to make images square.
+    3. Resizing images to 128x128 pixels.
+
+    The processed images are saved in separate directories within the selected folder.
+
+    Authors: Diego Tovar & Rodrigo Gomez
+    Contact: diego.tovar@udem.edu & jorger.gomez@udem.edu
+    Organization: Universidad de Monterrey (UDEM)
+    First created on January 13, 2025
+
+    Usage Examples:
+        Basic usage:
+            python resize_with_padding.py
+
+        The script prompts the user to select a folder containing images and processes them automatically.
+"""
 import os
 from tkinter import Tk, filedialog
 from PIL import Image, ImageOps, ImageChops
