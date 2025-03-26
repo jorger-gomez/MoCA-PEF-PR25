@@ -47,10 +47,11 @@ def generate_random_parameters():
     parameters = {
         # Affine transformation parameters
         'theta': np.random.uniform(-45, 45),       # Rotation in degrees (limited to avoid cutting too much of the clock)
-        'tx': np.random.uniform(-10, 10),            # Translation in pixels (x)
-        'ty': np.random.uniform(-10, 10),            # Translation in pixels (y)
+        'tx': np.random.uniform(0, 0),            # Translation in pixels (x)
+        'ty': np.random.uniform(0, 0),            # Translation in pixels (y)
         'zx': np.random.uniform(0.8, 1.2),           # Zoom factor in X
         'zy': np.random.uniform(0.8, 1.2),           # Zoom factor in Y
+        'shear': np.random.uniform(-0.3, 0.3),       # Shear (in radians)
         'flip_horizontal': np.random.choice([True, False]),
         'flip_vertical': np.random.choice([True, False]),
         'brightness': np.random.uniform(0.8, 1.2),     # Brightness adjustment (simulate realistic camera settings)
@@ -62,11 +63,21 @@ def generate_random_parameters():
         # Elastic transformation parameters
         'elastic': np.random.choice([True, False]),
         'elastic_alpha': np.random.uniform(30, 50),   # Scaling factor for elastic transformation
-        'elastic_sigma': np.random.uniform(4, 6),       # Smoothing factor for elastic transformation
+        'elastic_sigma': np.random.uniform(4, 6),     # Smoothing factor for elastic transformation
         # Cutout parameters
         'cutout': np.random.choice([True, False]),
         'num_cutouts': np.random.randint(0, 5)  # number of cutouts (from 0 to 4)
     }
+    # If cutout is enabled, generate relative cutout coordinates for consistency.
+    if parameters['cutout']:
+        cutouts = []
+        for _ in range(parameters['num_cutouts']):
+            w_ratio = np.random.uniform(0.1, 0.3)
+            h_ratio = np.random.uniform(0.1, 0.3)
+            x_ratio = np.random.uniform(0, 1 - w_ratio)
+            y_ratio = np.random.uniform(0, 1 - h_ratio)
+            cutouts.append((x_ratio, y_ratio, w_ratio, h_ratio))
+        parameters['cutouts'] = cutouts
     return parameters
 
 def elastic_transform_multi(image, alpha, sigma, random_state=None):
@@ -103,11 +114,12 @@ def elastic_transform_multi(image, alpha, sigma, random_state=None):
 
 def apply_transformation(image, parameters, not_mask):
     """Applies a series of transformations to an image based on given parameters."""
-    # Apply affine transformation
+    # Apply affine transformation including shear
     transform = AffineTransform(
         rotation=np.deg2rad(parameters['theta']),
         translation=(parameters['tx'], parameters['ty']),
-        scale=(parameters['zx'], parameters['zy'])
+        scale=(parameters['zx'], parameters['zy']),
+        shear=parameters['shear']
     )
     transformed_image = warp(np.array(image), transform.inverse, mode='edge')
     transformed_image = Image.fromarray((transformed_image * 255).astype(np.uint8))
@@ -152,21 +164,14 @@ def apply_transformation(image, parameters, not_mask):
         transformed_np = elastic_transform_multi(np_img, parameters['elastic_alpha'], parameters['elastic_sigma'])
         transformed_image = Image.fromarray(transformed_np.astype(np.uint8))
     
-    # Apply cutout if enabled
-    if parameters['cutout']:
+    # Apply cutout if enabled using the pre-generated relative coordinates
+    if parameters['cutout'] and 'cutouts' in parameters:
         width, height = transformed_image.size
-        num_cutouts = parameters.get('num_cutouts', np.random.randint(0, 5))
-        for _ in range(num_cutouts):
-            # Define the cutout size as a random percentage of the image dimensions
-            min_cut_w = max(1, int(width * 0.1))
-            max_cut_w = max(1, int(width * 0.3))
-            min_cut_h = max(1, int(height * 0.1))
-            max_cut_h = max(1, int(height * 0.3))
-            cutout_w = np.random.randint(min_cut_w, max_cut_w + 1)
-            cutout_h = np.random.randint(min_cut_h, max_cut_h + 1)
-            # Choose a random position ensuring the rectangle is fully within the image
-            x = np.random.randint(0, width - cutout_w + 1)
-            y = np.random.randint(0, height - cutout_h + 1)
+        for (x_ratio, y_ratio, w_ratio, h_ratio) in parameters['cutouts']:
+            x = int(x_ratio * width)
+            y = int(y_ratio * height)
+            cutout_w = int(w_ratio * width)
+            cutout_h = int(h_ratio * height)
             draw = ImageDraw.Draw(transformed_image)
             # If not_mask is True (background image), fill with black; otherwise (mask), fill with transparency.
             fill_color = (0, 0, 0) if not_mask else (0, 0, 0, 0)
