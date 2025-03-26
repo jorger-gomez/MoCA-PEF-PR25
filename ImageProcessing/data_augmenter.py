@@ -180,7 +180,7 @@ def apply_transformation(image, parameters, not_mask):
     return transformed_image
 
 def augment_images(input_path, output_path, num_images=20):
-    """Generates augmented images applying the same transformations to images and their masks."""
+    """Genera imágenes aumentadas aplicando las mismas transformaciones a las imágenes y sus máscaras."""
     os.makedirs(output_path, exist_ok=True)
     subfolders = [d for d in os.listdir(input_path) if os.path.isdir(os.path.join(input_path, d))]
     total_images = sum(len(os.listdir(os.path.join(input_path, sub))) for sub in subfolders)
@@ -189,32 +189,32 @@ def augment_images(input_path, output_path, num_images=20):
     total_to_generate = total_images * num_images
     print(f"{total_to_generate} images to be generated.")
     counter = 0
-    
+
     with tqdm(total=total_to_generate, desc="Generating augmented images", unit="img") as pbar:
         for subfolder in subfolders:
             subfolder_path = os.path.join(input_path, subfolder)
             images = [img for img in os.listdir(subfolder_path) if img.lower().endswith(('png', 'jpg', 'jpeg'))]
-            
+
             for i in range(num_images):
                 parameters = generate_random_parameters()
-                batch_prefix = f"A{i+1}_"
-                
+                batch_prefix = f"A{i+1:03d}_"
+                output_iteration_folder = os.path.join(output_path, f"{batch_prefix}{subfolder}")
+                os.makedirs(output_iteration_folder, exist_ok=True)
+
                 for img_name in images:
                     img_path = os.path.join(subfolder_path, img_name)
                     try:
                         img = Image.open(img_path)
-                        # Determine if the image is not a mask based on its filename (contains "background", case-insensitive)
                         not_mask = 'background' in img_name.lower()
-                        # Convert image: if not_mask, use RGB; otherwise, use RGBA (to support transparency)
                         img = img.convert('RGB' if not_mask else 'RGBA')
                         transformed_img = apply_transformation(img, parameters, not_mask)
                         batch_filename = f"{batch_prefix}{os.path.splitext(img_name)[0]}.png"
-                        transformed_img.save(os.path.join(output_path, batch_filename))
+                        transformed_img.save(os.path.join(output_iteration_folder, batch_filename))
                         counter += 1
                         pbar.update(1)
                     except Exception as e:
                         print(f"Error processing {img_name}: {e}")
-    
+
     print(f"Process completed. {counter} augmented images have been saved.")
 
 def main():
