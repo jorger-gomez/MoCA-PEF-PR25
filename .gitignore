@@ -19,6 +19,7 @@ Thumbs.db
 # Incluir archivos específicos en UNet
 !UNet/segmentation_pytorch.py
 !UNet/segmentation_tensorflow.py
+!UNet/clock_inference.py
 
 # Incluir todo lo que hay en WebPage
 !WebPage/
