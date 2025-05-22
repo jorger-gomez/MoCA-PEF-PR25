@@ -1,0 +1,76 @@
+{# 
+    404 Error Page - NeuroLink Project
+    
+    This template renders a custom 404 "Page Not Found" error page with a
+    visually consistent design matching the application's style.
+    
+    Authors:
+    - Diego Aldahir Tovar Ledesma - diego.tovar@udem.edu
+    - Jorge Rodrigo Gómez Mayo - jorger.gomez@udem.edu
+    
+    Organization: Universidad de Monterrey
+    First created: February 2025
+  #}
+  
+  {% extends "base.html" %}
+  
+  {# Set the page title #}
+  {% block title %}NeuroLink - Página no encontrada{% endblock %}
+  
+  {# 
+    Custom CSS styles for error page 
+    These styles create a centered, visually appealing error display
+  #}
+  {% block extra_css %}
+  <style>
+      /* Main container for error content with centered alignment */
+      .error-container {
+          text-align: center;
+          padding: 100px 20px;
+          color: white;
+      }
+      
+      /* Large, prominent error code display */
+      .error-container h1 {
+          font-size: 72px;
+          margin-bottom: 20px;
+      }
+      
+      /* Error message styling */
+      .error-container p {
+          font-size: 20px;
+          margin-bottom: 30px;
+      }
+      
+      /* Home button styling with inverse color scheme */
+      .home-button {
+          padding: 12px 25px;
+          font-size: 16px;
+          background-color: white;
+          color: var(--primary-color);
+          border: none;
+          border-radius: var(--border-radius);
+          cursor: pointer;
+          text-decoration: none;
+          display: inline-block;
+          transition: all 0.3s ease;
+      }
+      
+      /* Hover effect for button with slight elevation */
+      .home-button:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+  </style>
+  {% endblock %}
+  
+  {# Main content block with error information #}
+  {% block content %}
+  <div class="content" style="background: linear-gradient(180deg, #703B7E 13.57%, #824F90 41.2%, #B692B7 72.02%);">
+      <div class="error-container">
+          <h1>404</h1>
+          <p>Lo sentimos, la página que estás buscando no existe.</p>
+          <a href="{{ url_for('home') }}" class="home-button">Volver al Inicio</a>
+      </div>
+  </div>
+  {% endblock %}

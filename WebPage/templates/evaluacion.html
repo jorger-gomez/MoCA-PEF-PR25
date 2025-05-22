@@ -1,0 +1,82 @@
+{# 
+    Evaluation Page - NeuroLink Project
+    
+    This template provides the interface for users to create or upload 
+    clock drawings for analysis. It offers two methods: drawing directly
+    in a canvas element or uploading an existing image file. The drawings
+    are then sent to the backend for processing with the clock segmentation model.
+    
+    Authors:
+    - Diego Aldahir Tovar Ledesma - diego.tovar@udem.edu
+    - Jorge Rodrigo Gómez Mayo - jorger.gomez@udem.edu
+    
+    Organization: Universidad de Monterrey
+    First created: February 2025
+  #}
+  
+  {% extends "base.html" %}
+  
+  {# Set page title #}
+  {% block title %}NeuroLink - Evaluación{% endblock %}
+  
+  {# Add page-specific CSS #}
+  {% block extra_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/evaluacion.css') }}">
+  {% endblock %}
+  
+  {# Main content #}
+  {% block content %}
+  <div class="content">
+      <h1>Prueba del Reloj</h1>
+      
+      {# Instructions for the user #}
+      <div class="instructions-box">
+          <p>Dibuja un reloj o sube una imagen de un reloj dibujado para su análisis.</p>
+          <p>Asegúrate de incluir: un círculo, los 12 números en las posiciones correctas y las manecillas marcando las 11:10.</p>
+      </div>
+  
+      <div class="evaluation-container">
+          {# Drawing section - allows users to draw the clock directly in the browser #}
+          <div class="section draw-section">
+              <h2>Dibujar Reloj</h2>
+              <div class="canvas-area">
+                  {# Canvas element for drawing interface #}
+                  <canvas id="drawingCanvas" width="360" height="360" class="canvas-area"></canvas>
+                  {# Initial instruction overlay that disappears when drawing starts #}
+                  <div class="draw-instruction" id="draw-instruction">Haz clic aquí para dibujar un reloj</div>
+              </div>
+              {# Button to clear the drawing and start over (hidden initially) #}
+              <button id="clear-draw" class="button hidden">Reiniciar</button>
+          </div>
+  
+          {# Visual divider between the two options #}
+          <div class="divider">O</div>
+  
+          {# Image upload section - allows users to upload an existing image #}
+          <div class="section upload-section">
+              <h2>Subir Imagen</h2>
+              <div class="upload-container">
+                  {# Hidden file input for image upload #}
+                  <input type="file" id="file" accept="image/*" style="display: none;">
+                  {# Styled label that acts as the upload button #}
+                  <label for="file" class="upload-label">
+                      <span>Haz clic aquí para subir una imagen</span>
+                  </label>
+                  {# Canvas to display the uploaded image (hidden initially) #}
+                  <canvas id="imageCanvas" width="360" height="360" class="hidden canvas-area"></canvas>
+                  {# Button to remove the uploaded image (hidden initially) #}
+                  <button id="remove-image" class="button hidden">Quitar Imagen</button>
+              </div>
+          </div>
+      </div>
+  
+      {# Button to submit the drawing or image for analysis (disabled initially) #}
+      <button id="submit-button" class="submit-button disabled">Analizar Reloj</button>
+      
+  </div>
+  {% endblock %}
+  
+  {# Load JavaScript for handling drawing and upload functionality #}
+  {% block scripts %}
+  <script src="{{ url_for('static', filename='js/evaluacion.js') }}"></script>
+  {% endblock %}

@@ -1,84 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nosotros</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            margin: 0; /* Removes default margin for the body */
-            font-family: Inter, sans-serif; /* Sets a clean, modern font */
-            background-color: white; /* Sets the background color of the page */
-            display: flex; /* Enables flexbox for alignment */
-            flex-direction: column; /* Aligns items vertically */
-            align-items: center; /* Centers items horizontally */
-            justify-content: flex-start; /* Aligns items at the top of the page */
-        }
-        header {
-            display: flex; /* Enables flexbox for the header */
-            align-items: center; /* Vertically centers the header content */
-            justify-content: space-between; /* Distributes space between logo and navigation */
-            background-color: white; /* Sets the background color of the header */
-            padding: 10px 20px; /* Adds padding inside the header */
-            width: 93%; /* Matches the width of the rectangle below */
-            margin: 0 auto; /* Centers the header on the page */
-        }
-        .logo {
-            margin-left: 0; /* Aligns the logo with the rectangle */
-        }
-        .logo img {
-            height: 55px; /* Sets the height of the logo image */
-            margin-top: 5px;
-        }
-        nav {
-            display: flex; /* Enables flexbox for navigation links */
-            gap: 20px; /* Adds spacing between navigation links */
-            justify-content: center; /* Centers the navigation links */
-            flex-grow: 1; /* Allows navigation to take up available space */
-        }
-        nav a {
-            color: black; /* Sets the text color of links */
-            text-decoration: none; /* Removes underline from links */
-            font-size: 18px; /* Sets the font size for links */
-            font-weight: bold; /* Makes the text bold */
-        }
-        nav a:hover {
-            text-decoration: underline; /* Adds underline on hover */
-        }
-        .content {
-            background: linear-gradient(180deg, #43C6AC 3.57%, #F8FFAE 88.79%); /* Sets a gradient background for the rectangle */
-            border-radius: 10px; /* Rounds the corners of the rectangle */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow around the rectangle */
-
-            width: 93%; /* Matches the width of the header */
-            height: 790px; /* Sets the height of the rectangle */
-
-            margin: 0px auto; /* Reduces margin at the top to decrease spacing */
-            padding: 20px; /* Adds inner padding for the content */
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="logo">
-            <img src="/static/images/logo.png" alt="Logo">
-        </div>
-        <nav>
-            <a href="/">Inicio</a>
-            <a href="/registro">Registro</a>
-            <a href="/historial">Historial</a>
-            <a href="/nosotros">Nosotros</a>
-
-
-        </nav>
-    </header>
-    <div class="content">
-        <!-- Contact specific content goes here -->
-    </div>
-</body>
-</html>
+{# 
+    About Page - NeuroLink Project
+    
+    This template renders the "About Us" page that provides detailed information
+    about the NeuroLink platform, its mission, technology, and the science behind
+    the Clock Drawing Test. It serves as an educational resource for users who
+    want to understand the platform's purpose and technical foundation.
+    
+    Authors:
+    - Diego Aldahir Tovar Ledesma - diego.tovar@udem.edu
+    - Jorge Rodrigo Gómez Mayo - jorger.gomez@udem.edu
+    
+    Organization: Universidad de Monterrey
+    First created: February 2025
+  #}
+  
+  {% extends "base.html" %}
+  
+  {# Set page title #}
+  {% block title %}NeuroLink - Nosotros{% endblock %}
+  
+  {# Add page-specific CSS #}
+  {% block extra_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/nosotros.css') }}">
+  {% endblock %}
+  
+  {# Main content #}
+  {% block content %}
+  <div class="content">
+      <div class="about-container">
+          <h1>Sobre NeuroLink</h1>
+          
+          {# Mission statement section #}
+          <section class="mission">
+              <h2>Nuestra Misión</h2>
+              <p>NeuroLink nace con el propósito de democratizar el acceso a evaluaciones cognitivas mediante tecnología de inteligencia artificial. Nuestra plataforma permite realizar un análisis preliminar del Test del Reloj, una prueba ampliamente utilizada para la detección temprana de deterioro cognitivo.</p>
+          </section>
+          
+          {# Technology overview section with feature highlights #}
+          <section class="technology">
+              <h2>Nuestra Tecnología</h2>
+              <p>Utilizamos modelos avanzados de visión por computadora y aprendizaje profundo para analizar dibujos del reloj. Estos modelos han sido entrenados con miles de ejemplos para detectar patrones asociados con diferentes condiciones cognitivas.</p>
+              
+              {# Technology features displayed as cards #}
+              <div class="tech-details">
+                  {# Feature 1: Precision Analysis #}
+                  <div class="tech-item">
+                      <div class="tech-icon">🔍</div>
+                      <h3>Análisis de Precisión</h3>
+                      <p>Evaluamos la precisión del círculo, la colocación de números y la posición de las manecillas.</p>
+                  </div>
+                  
+                  {# Feature 2: Detection Algorithms #}
+                  <div class="tech-item">
+                      <div class="tech-icon">📊</div>
+                      <h3>Algoritmos de Detección</h3>
+                      <p>Identificamos patrones asociados con diferentes condiciones cognitivas.</p>
+                  </div>
+                  
+                  {# Feature 3: Artificial Intelligence #}
+                  <div class="tech-item">
+                      <div class="tech-icon">🧠</div>
+                      <h3>Inteligencia Artificial</h3>
+                      <p>Nuestros modelos aprenden continuamente para mejorar la precisión diagnóstica.</p>
+                  </div>
+              </div>
+          </section>
+          
+          {# Educational section about the Clock Drawing Test #}
+          <section class="test-info">
+              <h2>Sobre el Test del Reloj</h2>
+              <p>El Test del Reloj es una herramienta neuropsicológica utilizada ampliamente para evaluar funciones cognitivas como la capacidad visuoespacial, la función ejecutiva y la memoria. La prueba consiste en pedirle a la persona que dibuje un reloj con todos sus números y que coloque las manecillas marcando una hora específica, generalmente las 11:10.</p>
+              <p>Esta prueba es valiosa porque puede revelar déficits cognitivos en múltiples dominios, incluyendo:</p>
+              <ul>
+                  <li>Comprensión de instrucciones</li>
+                  <li>Planificación</li>
+                  <li>Memoria visual</li>
+                  <li>Habilidades visuoconstructivas</li>
+                  <li>Capacidad de abstracción</li>
+                  <li>Funciones ejecutivas</li>
+              </ul>
+          </section>
+          
+          {# Important disclaimer about clinical use #}
+          <section class="disclaimer">
+              <h2>Importante</h2>
+              <p>NeuroLink es una herramienta de evaluación preliminar y no sustituye el diagnóstico profesional. Los resultados deben ser interpretados por profesionales de la salud calificados.</p>
+          </section>
+          
+          {# Contact information section #}
+          <section class="contact">
+              <h2>Contacto</h2>
+              <p>Para más información, contáctanos en: <a href="mailto:info@neurolink.com">info@neurolink.com</a></p>
+          </section>
+      </div>
+  </div>
+  {% endblock %}

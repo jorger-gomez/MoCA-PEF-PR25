@@ -1,0 +1,291 @@
+/**
+ * Evaluation Page Styles - NeuroLink Project
+ * 
+ * This stylesheet defines the layout and appearance of the clock drawing test
+ * evaluation page. It creates a dual-option interface allowing users to either
+ * draw a clock directly on a canvas or upload an image of a previously drawn clock.
+ * The layout includes instruction areas, drawing/upload sections, and action buttons.
+ * 
+ * Authors:
+ * - Diego Aldahir Tovar Ledesma - diego.tovar@udem.edu
+ * - Jorge Rodrigo Gómez Mayo - jorger.gomez@udem.edu
+ * 
+ * Organization: Universidad de Monterrey
+ * First created: April 2025
+ */
+
+/* Main content container with gradient background */
+.content {
+    background: linear-gradient(180deg, #703B7E 13.57%, #824F90 41.2%, #B692B7 72.02%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    padding-bottom: 80px; /* Space for analyze button */
+    height: 850px; /* Fixed height matching other pages */
+    /* overflow-y: false; /* Allow scrolling for larger content */
+    box-sizing: border-box;
+}
+
+/* Page heading */
+h1 {
+    color: white;
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+/* Instructions box with semi-transparent background */
+.instructions-box {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    padding: 11px 15px;
+    color: white;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+}
+
+/* Text inside instructions box */
+.instructions-box p {
+    font-size: 18px;
+    margin: 15px 0;
+}
+
+/* Alternative instructions container */
+.instructions {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+/* Heading inside instructions */
+.instructions h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+/* Text inside instructions */
+.instructions p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Container for the two input options */
+.evaluation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 25px;
+    margin-bottom: 40px;
+    gap: 500px; /* Increased to 500px for more space between cards */
+}
+
+/* Individual section (draw or upload) */
+.section {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    height: 500px; /* Fixed height for both sections */
+    position: relative; /* For positioning internal elements */
+}
+
+/* Section headings */
+.section h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Canvas drawing area */
+.canvas-area {
+    border: 1px dashed #ddd;
+    border-radius: var(--border-radius);
+    background-color: white;
+    width: 100%;
+    height: 400px;
+    cursor: pointer;
+    position: relative; /* For instructional text */
+}
+
+/* Drawing instruction text overlay */
+.draw-instruction {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #999;
+    font-size: 16px;
+    text-align: center;
+    pointer-events: none; /* Allow clicks to pass through to canvas */
+    transition: opacity 0.3s ease;
+    width: 100%;
+}
+
+/* "OR" divider between sections */
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: white;
+    font-weight: bold;
+    color: var(--primary-color);
+    box-shadow: var(--shadow);
+    z-index: 30; /* Increased to ensure it's above everything */
+    position: absolute;
+    left: 50%;
+    top: 60%; /* Changed to 60% to lower it */
+    transform: translate(-50%, -50%);
+}
+
+/* Container for section buttons */
+.button-container {
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Upload area container */
+.upload-container {
+    width: 100%;
+    height: 400px;
+    position: relative;
+}
+
+/* Styled label for file input */
+.upload-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius);
+    border: 1px dashed #ccc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Hover effect for upload area */
+.upload-label:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(112, 59, 126, 0.05);
+}
+
+/* Text inside upload label */
+.upload-label span {
+    color: #999;
+    font-size: 16px;
+}
+
+/* Canvas for displaying uploaded image */
+#imageCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5; /* Position above the label */
+}
+
+/* Button to remove uploaded image */
+#remove-image {
+    position: absolute;
+    bottom: -60px; /* Position below the canvas */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Button to clear drawing */
+#clear-draw {
+    position: absolute;
+    bottom: 10px; /* Same position as "Remove Image" button */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Main submission button */
+.submit-button {
+    position: absolute;
+    bottom: 20px;
+    padding: 15px 40px;
+    font-size: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 20;
+}
+
+/* Hover effect for submit button (when not disabled) */
+.submit-button:hover:not(.disabled) {
+    background-color: #824F90;
+    transform: translateY(-2px);
+}
+
+/* Responsive design for tablets and smaller desktops */
+@media (max-width: 1100px) {
+    /* Stack the sections vertically */
+    .evaluation-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 80px; /* Increased for mobile version too */
+    }
+
+    /* Reposition divider for vertical layout */
+    .divider {
+        position: relative;
+        margin: 20px 0;
+        transform: none;
+        left: auto;
+        top: auto;
+    }
+
+    /* Adjust section width for smaller screens */
+    .section {
+        width: 90%;
+        max-width: 500px;
+    }
+    
+    /* Reposition submit button for vertical layout */
+    .submit-button {
+        position: static;
+        margin-top: 60px;
+        margin-bottom: 20px;
+    }
+    
+    /* Make content height flexible */
+    .content {
+        height: auto;
+        min-height: 100vh;
+    }
+}
+
+/* Responsive design for mobile phones */
+@media (max-width: 600px) {
+    /* Adjust section height for smaller screens */
+    .section {
+        height: auto;
+        min-height: 450px;
+    }
+    
+    /* Reduce canvas height for mobile */
+    .canvas-area, .upload-container {
+        height: 300px;
+    }
+}

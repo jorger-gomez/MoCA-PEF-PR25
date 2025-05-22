@@ -1,0 +1,159 @@
+/* Estilos para la visualización de resultados de clasificación */
+
+.classification-result {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+}
+
+.classification-result h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 22px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    text-align: left;
+}
+
+.status-display {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.status-icon {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+    flex-shrink: 0; /* Evita que el círculo se comprima */
+    margin-right: 25px; /* Espacio entre el círculo y el texto */
+}
+
+.status-icon.healthy {
+    background-color: #4CAF50;
+}
+
+.status-icon.sick {
+    background-color: #F44336;
+}
+
+.status-icon.uncertain {
+    background-color: #FF9800;
+}
+
+.status-icon .percentage {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.status-text {
+    margin-left: 25px;
+    text-align: left;
+}
+
+.status-text h3 {
+    font-size: 26px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.status-text h3.healthy {
+    color: #4CAF50;
+}
+
+.status-text h3.sick {
+    color: #F44336;
+}
+
+.status-text h3.uncertain {
+    color: #FF9800;
+}
+
+.status-text p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.confidence-bar {
+    height: 20px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.confidence-fill {
+    height: 100%;
+    text-align: right;
+    padding-right: 10px;
+    line-height: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    box-sizing: border-box;
+}
+
+.confidence-fill.high {
+    background-color: #4CAF50;
+}
+
+.confidence-fill.medium {
+    background-color: #FF9800;
+}
+
+.confidence-fill.low {
+    background-color: #F44336;
+}
+
+/* Estilos para impresión */
+@media print {
+    .classification-result {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+    
+    .confidence-bar {
+        border: 1px solid #ddd;
+    }
+    
+    .status-icon {
+        border: 2px solid #333;
+    }
+    
+    .status-icon.healthy {
+        background-color: #eee;
+        color: #4CAF50;
+    }
+    
+    .status-icon.sick {
+        background-color: #eee;
+        color: #F44336;
+    }
+    
+    .status-icon.uncertain {
+        background-color: #eee;
+        color: #FF9800;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .status-display {
+        flex-direction: column;
+    }
+    
+    .status-text {
+        margin-left: 0;
+        margin-top: 20px;
+        text-align: center;
+    }
+}

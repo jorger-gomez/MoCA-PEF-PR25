@@ -1,0 +1,270 @@
+/**
+ * Animations Stylesheet - NeuroLink Project
+ * 
+ * This stylesheet defines animations and transitions used throughout the NeuroLink application.
+ * It provides smooth visual feedback for user interactions, page transitions, and 
+ * loading states. The animations enhance the user experience while maintaining 
+ * accessibility through reduced-motion preferences.
+ * 
+ * Authors:
+ * - Diego Aldahir Tovar Ledesma - diego.tovar@udem.edu
+ * - Jorge Rodrigo Gómez Mayo - jorger.gomez@udem.edu
+ * 
+ * Organization: Universidad de Monterrey
+ * First created: April 2025
+ */
+
+/* Global animations and basic transitions */
+
+/* Prepare document body for transitions */
+body {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+/* Initial state for elements that will be animated */
+body:not(.ready) .content,
+body:not(.ready) header {
+    opacity: 0;
+}
+
+/* Ready state for animations */
+body.ready {
+    opacity: 1;
+}
+
+/* Animations for main elements */
+header, .content {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Heading animations */
+h1, h2 {
+    opacity: 0;
+    transform: translateY(-15px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Animated button base styles */
+.animated-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Enhanced hover effect for buttons */
+.animated-button:hover:not(.disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Ripple effect on click */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+/* Ripple animation keyframes */
+@keyframes ripple {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+/* Section animation base */
+.animated-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Section visible state */
+.section-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Button click animation */
+.button-clicked {
+    animation: buttonPulse 0.3s ease;
+}
+
+/* Button pulse animation keyframes */
+@keyframes buttonPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+/* Evaluation page specific animations */
+
+/* "OR" divider pulse animation */
+.divider.pulse {
+    animation: pulseEffect 2s infinite;
+}
+
+/* Pulse effect animation keyframes */
+@keyframes pulseEffect {
+    0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+    50% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); }
+    100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+}
+
+/* Canvas active state animation */
+.canvas-active {
+    animation: borderGlow 2s;
+}
+
+/* Border glow animation keyframes */
+@keyframes borderGlow {
+    0% { box-shadow: 0 0 0 1px rgba(112, 59, 126, 0.3); }
+    50% { box-shadow: 0 0 0 3px rgba(112, 59, 126, 0.5); }
+    100% { box-shadow: 0 0 0 1px rgba(112, 59, 126, 0.3); }
+}
+
+/* Results page specific animations */
+
+/* Score circle animation */
+.score-circle {
+    transform: scale(0.8);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Score circle animated state */
+.score-circle-animated {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Table row animations */
+.analysis-details tr {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Table row visible state */
+.analysis-details tr.row-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Segmentation container animations */
+.segmentations-container.fade-in {
+    animation: fadeIn 0.5s forwards;
+}
+
+.segmentations-container.fade-out {
+    animation: fadeOut 0.3s forwards;
+}
+
+/* Individual segmentation item animations */
+.segmentation-item {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Segmentation item visible state */
+.segmentation-item.item-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fade in animation keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade out animation keyframes */
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(20px); }
+}
+
+/* Loading spinner animation for processing states */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    margin: 20px auto;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+}
+
+/* Spin animation keyframes */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Smooth transitions for input fields */
+input, textarea, select {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Focus state for input fields */
+input:focus, textarea:focus, select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(112, 59, 126, 0.2);
+}
+
+/* Page transition states */
+body.page-transition-out {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+body.page-transition-in {
+    opacity: 0;
+    animation: fadeInPage 0.5s forwards 0.1s;
+}
+
+/* Page fade in animation keyframes */
+@keyframes fadeInPage {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive animations for mobile devices */
+@media (max-width: 768px) {
+    /* Adjust animations on mobile devices */
+    .ripple {
+        display: none; /* Disable ripple effect on mobile for better performance */
+    }
+    
+    /* Simplify other animations */
+    .animated-section {
+        transition: opacity 0.3s ease;
+    }
+    
+    /* Disable some complex animations on mobile */
+    .divider.pulse {
+        animation: none;
+    }
+}
+
+/* Accessibility: Honor reduced motion preferences */
+@media (prefers-reduced-motion) {
+    /* Disable most animations */
+    *, *::before, *::after {
+        animation-duration: 0.001s !important;
+        transition-duration: 0.001s !important;
+    }
+    
+    /* Only maintain opacity changes for accessibility */
+    .animated-section, h1, h2, header, .content {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

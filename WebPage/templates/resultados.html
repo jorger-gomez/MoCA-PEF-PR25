@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}NeuroLink - Resultados{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resultados.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/classification.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="results-container">
+        <h1>Resultados del Análisis</h1>
+        
+        <div class="results-layout">
+            <!-- Columna izquierda: Imagen original y segmentaciones -->
+            <div class="left-column">
+                <div class="original-image-container">
+                    <h2>Imagen Analizada</h2>
+                    
+                    <!-- Definir las URLs de las imágenes por separado -->
+                    {% set original_url = url_for('static', filename='results/' + resultado.original_filename) if 'original_filename' in resultado else url_for('static', filename='uploads/' + resultado.image_filename) %}
+                    
+                    <!-- Usar una imagen simple sin onerror -->
+                    <img src="{{ original_url }}" 
+                         alt="Imagen del reloj analizado" 
+                         class="original-image">
+                    
+                    <button id="toggle-segmentations" class="button toggle-button">Mostrar Segmentaciones</button>
+                </div>
+                
+                <div id="segmentations-container" class="segmentations-container hidden">
+                    <h3>Segmentaciones</h3>
+                    <div class="segmentation-grid">
+                        <div class="segmentation-item">
+                            <h4>Contorno</h4>
+                            <img src="{{ url_for('static', filename='results/' + resultado.contour_filename) }}" 
+                                 alt="Segmentación del contorno">
+                        </div>
+                        <div class="segmentation-item">
+                            <h4>Números</h4>
+                            <img src="{{ url_for('static', filename='results/' + resultado.numbers_filename) }}" 
+                                 alt="Segmentación de números">
+                        </div>
+                        <div class="segmentation-item">
+                            <h4>Manecillas</h4>
+                            <img src="{{ url_for('static', filename='results/' + resultado.hands_filename) }}" 
+                                 alt="Segmentación de manecillas">
+                        </div>
+                        <div class="segmentation-item">
+                            <h4>Reloj Completo</h4>
+                            <img src="{{ url_for('static', filename='results/' + resultado.entire_filename) }}" 
+                                 alt="Segmentación completa">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Columna derecha: Resultados del análisis -->
+            <div class="right-column">
+                <!-- Evaluación Cognitiva (en lugar de Detalles del Análisis) -->
+                <div class="classification-result">
+                    <h2>Evaluación Cognitiva</h2>
+                    
+                    <div class="status-display">
+                        <div class="status-icon 
+                            {% if resultado.health_status == 'Sano' %}healthy{% elif resultado.health_status == 'Enfermo' %}sick{% else %}uncertain{% endif %}">
+                            <div class="percentage">{{ "%.1f"|format(resultado.confidence) }}%</div>
+                        </div>
+                        
+                        <div class="status-text">
+                            <h3 class="{% if resultado.health_status == 'Sano' %}healthy{% elif resultado.health_status == 'Enfermo' %}sick{% else %}uncertain{% endif %}">
+                                {{ resultado.health_status }}
+                            </h3>
+                            <p>
+                                {% if resultado.health_status == 'Sano' %}
+                                    El análisis indica que el dibujo del reloj presenta características consistentes con un rendimiento cognitivo normal.
+                                {% elif resultado.health_status == 'Enfermo' %}
+                                    El análisis indica que el dibujo del reloj presenta características que podrían sugerir algún grado de deterioro cognitivo.
+                                {% else %}
+                                    No se ha podido determinar con precisión el estado. Se recomienda consultar con un especialista.
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="confidence-bar">
+                        <div class="confidence-fill 
+                            {% if resultado.confidence > 80 %}high{% elif resultado.confidence > 60 %}medium{% else %}low{% endif %}" 
+                            style="width: {{ resultado.confidence }}%">
+                            {{ "%.1f"|format(resultado.confidence) }}%
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tabla de detalles del análisis -->
+                <div class="details-section">
+                    <h2>Detalles del Análisis</h2>
+                    <table class="analysis-details">
+                        <tr>
+                            <th>Característica</th>
+                            <th>Evaluación</th>
+                        </tr>
+                        <tr>
+                            <td>Integridad del círculo</td>
+                            <td class="{% if resultado.circle_integrity %}success{% else %}warning{% endif %}">
+                                {% if resultado.circle_integrity %}Satisfactoria{% else %}Necesita mejorar{% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ubicación de números</td>
+                            <td class="{% if resultado.number_placement %}success{% else %}warning{% endif %}">
+                                {% if resultado.number_placement %}Correcta{% else %}Irregularidades detectadas{% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Posición de manecillas</td>
+                            <td class="{% if resultado.hand_placement %}success{% else %}warning{% endif %}">
+                                {% if resultado.hand_placement %}Correcta{% else %}Irregularidades detectadas{% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Números faltantes</td>
+                            <td class="{% if not resultado.missing_numbers %}success{% else %}warning{% endif %}">
+                                {% if not resultado.missing_numbers %}Ninguno{% else %}Detectados{% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Organización espacial</td>
+                            <td class="{% if resultado.spatial_organization %}success{% else %}warning{% endif %}">
+                                {% if resultado.spatial_organization %}Adecuada{% else %}Desorganización detectada{% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <!-- Volver a agregar el bloque de disclaimer -->
+                <div class="disclaimer">
+                    <h3>Importante</h3>
+                    <p>Este análisis es preliminar y no constituye un diagnóstico médico. Se recomienda consultar con un profesional de la salud para una evaluación completa.</p>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="button download-button" onclick="window.print()">Descargar PDF</button>
+                    <a href="{{ url_for('evaluacion') }}" class="button">Nueva Evaluación</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleButton = document.getElementById('toggle-segmentations');
+    const segmentationsContainer = document.getElementById('segmentations-container');
+    
+    toggleButton.addEventListener('click', function() {
+        if (segmentationsContainer.classList.contains('hidden')) {
+            segmentationsContainer.classList.remove('hidden');
+            toggleButton.textContent = 'Ocultar Segmentaciones';
+        } else {
+            segmentationsContainer.classList.add('hidden');
+            toggleButton.textContent = 'Mostrar Segmentaciones';
+        }
+    });
+});
+</script>
+{% endblock %}

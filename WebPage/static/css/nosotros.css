@@ -1,0 +1,166 @@
+/**
+ * About Page Styles - NeuroLink Project
+ * 
+ * This stylesheet defines the layout and appearance of the "About Us" page,
+ * which provides information about the project, its mission, technology,
+ * and the science behind the Clock Drawing Test. The styles create a clean,
+ * readable layout with distinct sections and feature cards.
+ * 
+ * Authors:
+ * - Diego Aldahir Tovar Ledesma - diego.tovar@udem.edu
+ * - Jorge Rodrigo Gómez Mayo - jorger.gomez@udem.edu
+ * 
+ * Organization: Universidad de Monterrey
+ * First created: April 2025
+ */
+
+/* Main content container with gradient background */
+.content {
+    background: linear-gradient(180deg, #703B7E 13.57%, #824F90 41.2%, #B692B7 72.02%);
+}
+
+/* Container for about page content */
+.about-container {
+    color: #333;
+    padding: 30px;
+    max-width: 800px;
+    margin: 0 auto;
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Main page heading */
+.about-container h1 {
+    color: white;
+    font-size: 36px;
+    margin-bottom: 30px;
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Individual content sections */
+.about-container section {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow);
+}
+
+/* Section headings */
+.about-container h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 8px;
+}
+
+/* Paragraph text */
+.about-container p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* Remove bottom margin from last paragraph in each section */
+.about-container p:last-child {
+    margin-bottom: 0;
+}
+
+/* Container for technology feature cards */
+.tech-details {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 25px;
+    gap: 20px;
+}
+
+/* Individual technology feature card */
+.tech-item {
+    flex: 1;
+    min-width: 200px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect for feature cards */
+.tech-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Feature icon */
+.tech-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+/* Feature card heading */
+.tech-item h3 {
+    color: var(--secundary-color);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* Feature card description text */
+.tech-item p {
+    font-size: 14px;
+    margin: 0;
+}
+
+/* List in test information section */
+.test-info ul {
+    margin-left: 20px;
+    margin-bottom: 0;
+}
+
+/* List items in test information section */
+.test-info li {
+    margin-bottom: 5px;
+    line-height: 1.5;
+}
+
+/* Disclaimer section with highlighted background */
+.disclaimer {
+    background-color: rgba(255, 236, 179, 0.9); /* Light yellow for emphasis */
+}
+
+/* Contact links */
+.contact a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 1px dotted var(--primary-color);
+}
+
+/* Hover effect for contact links */
+.contact a:hover {
+    color: var(--accent-color);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    /* Adjust container padding */
+    .about-container {
+        padding: 20px 15px;
+    }
+    
+    /* Reduce section padding */
+    .about-container section {
+        padding: 20px;
+    }
+    
+    /* Stack tech items vertically */
+    .tech-details {
+        flex-direction: column;
+    }
+    
+    /* Full width tech items */
+    .tech-item {
+        min-width: 100%;
+    }
+}

@@ -1,0 +1,212 @@
+/**
+ * Main Stylesheet - NeuroLink Project
+ * 
+ * This is the core stylesheet that defines the global styles, color scheme,
+ * layout, typography, and common components used throughout the NeuroLink application.
+ * It establishes a consistent visual identity across all pages through CSS variables,
+ * shared layouts, and reusable component styles.
+ * 
+ * Authors:
+ * - Diego Aldahir Tovar Ledesma - diego.tovar@udem.edu
+ * - Jorge Rodrigo Gómez Mayo - jorger.gomez@udem.edu
+ * 
+ * Organization: Universidad de Monterrey
+ * First created: April 2025
+ */
+
+/* CSS Variables: Global color scheme and design constants */
+:root {
+    --primary-color: #703B7E;    /* Primary purple */
+    --secondary-color: #824F90;  /* Secondary purple (lighter) */
+    --accent-color: #B692B7;     /* Accent purple (lightest) */
+    --text-color: #333333;       /* Dark gray for text */
+    --background-color: white;   /* White background */
+    --border-radius: 10px;       /* Rounded corners */
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Standard shadow */
+}
+
+/* Base styles for the entire application */
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+}
+
+/* Header with logo and navigation */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 10px 20px;
+    width: 93%;
+    margin: 0 auto;
+}
+
+/* Logo container */
+.logo {
+    margin-left: 0;
+}
+
+/* Logo image size */
+.logo img {
+    height: 55px;
+    margin-top: 5px;
+}
+
+/* Navigation menu */
+nav {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+/* Navigation links */
+nav a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Navigation link hover effect */
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Main content container for all pages */
+.content {
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    width: 93%;
+    height: 850px; /* Fixed consistent height for all pages */
+    margin: 0px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Allow scrolling for content that exceeds height */
+    position: relative; /* For absolute positioning within container */
+}
+
+/* Unified button styles - inspired by the buttons on the home page */
+.button, a.button {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 16px;
+    color: white;
+    background-color: var(--primary-color);
+    border: 2px solid white;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Button hover effect with slight lift */
+.button:hover, a.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Green button for download/positive actions */
+.button.green-button, .download-button {
+    background-color: #4CAF50 !important; /* Green */
+    border-color: #4CAF50;
+}
+
+/* Green button hover state */
+.button.green-button:hover, .download-button:hover {
+    background-color: #388E3C !important; /* Darker green */
+    border-color: #388E3C;
+}
+
+/* Gray button for reset/remove/cancel actions */
+.button.reset-button, #clear-draw, #remove-image {
+    background-color: #A9A9A9; /* Dark gray */
+    border-color: #A9A9A9;
+}
+
+/* Gray button hover state */
+.button.reset-button:hover, #clear-draw:hover, #remove-image:hover {
+    background-color: #808080; /* Darker gray */
+    border-color: #808080;
+}
+
+/* Primary action button */
+.submit-button, .action-button {
+    background-color: var(--primary-color);
+    border-color: white;
+    padding: 15px 40px;
+    font-size: 18px;
+}
+
+/* Primary action button hover state */
+.submit-button:hover, .action-button:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Utility class to hide elements */
+.hidden {
+    display: none;
+}
+
+/* Utility class for disabled buttons */
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Responsive design for tablets */
+@media (max-width: 768px) {
+    /* Adjust content container for smaller screens */
+    .content {
+        height: auto;
+        min-height: 500px;
+        padding: 15px;
+    }
+    
+    /* Reduce navigation spacing */
+    nav {
+        gap: 10px;
+    }
+    
+    /* Smaller navigation text */
+    nav a {
+        font-size: 16px;
+    }
+    
+    /* Smaller buttons */
+    .button, a.button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+/* Responsive design for mobile phones */
+@media (max-width: 480px) {
+    /* Stack header elements vertically */
+    header {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    /* Adjust logo spacing */
+    .logo {
+        margin-bottom: 10px;
+    }
+    
+    /* Full-width navigation */
+    nav {
+        width: 100%;
+        justify-content: space-between;
+    }
+}

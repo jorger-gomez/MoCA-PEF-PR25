@@ -1,0 +1,56 @@
+{# 
+    Base Template - NeuroLink Project
+    
+    This template serves as the foundation for all pages in the NeuroLink application.
+    It provides the common HTML structure, header navigation, and CSS imports used 
+    throughout the site, ensuring a consistent look and feel across all pages.
+    
+    Authors:
+    - Diego Aldahir Tovar Ledesma - diego.tovar@udem.edu
+    - Jorge Rodrigo Gómez Mayo - jorger.gomez@udem.edu
+    
+    Organization: Universidad de Monterrey
+    First created: February 2025
+  #}
+  
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+      {# Meta tags for character encoding and responsive design #}
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      {# Dynamic title with default fallback #}
+      <title>{% block title %}NeuroLink{% endblock %}</title>
+  
+      {# Google Fonts preconnect for performance optimization #}
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+      
+      {# Main stylesheet for shared styling across all pages #}
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+      
+      {# Block for page-specific CSS #}
+      {% block extra_css %}{% endblock %}
+  </head>
+  <body>
+      {# Site header with logo and navigation menu #}
+      <header>
+          <div class="logo">
+              <img src="{{ url_for('static', filename='images/logo.png') }}" alt="NeuroLink Logo">
+          </div>
+          <nav>
+              <a href="{{ url_for('home') }}">Inicio</a>
+              <a href="{{ url_for('evaluacion') }}">Evaluación</a>
+              <a href="{{ url_for('nosotros') }}">Nosotros</a>
+          </nav>
+      </header>
+      
+      {# Main content block to be filled by child templates #}
+      {% block content %}{% endblock %}
+      
+      {# Block for page-specific JavaScript #}
+      {% block scripts %}{% endblock %}
+  </body>
+  </html>
